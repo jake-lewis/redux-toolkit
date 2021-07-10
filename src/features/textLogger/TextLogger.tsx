@@ -4,19 +4,24 @@ import { Logger } from './textLoggerSlice';
 
 interface Props {
     logger: Logger,
+    portIsLoading: boolean,
     onEdit: (text: string) => void,
     onDelete: () => void
 }
 
-export function TextLogger({logger, onEdit, onDelete}: Props) {
+export function TextLogger({logger, portIsLoading, onEdit, onDelete}: Props) {
 
     const [textValue, setTextValue] = useState(logger.text);
     const [isEditing, setEditing] = useState(false);
 
-    const toggleEditing = () => setEditing(editing => !editing);
+    const isLoading = portIsLoading && !isEditing;
     const onSubmit = () => {
         onEdit(textValue);
-        toggleEditing();
+        setEditing(false);
+    }
+    const onCancel = () => {
+        setTextValue(logger.text);
+        setEditing(false);
     }
 
     return(
@@ -29,10 +34,11 @@ export function TextLogger({logger, onEdit, onDelete}: Props) {
                 onChange={event => setTextValue(event.target.value)} 
                 value={textValue}/>
 
-            {!isEditing && <button onClick={toggleEditing}>Edit</button>}
+            {!isEditing && <button onClick={() => setEditing(true)}>Edit</button>}
             {isEditing && 
                 <>
-                    <button onClick={() => onSubmit()}>Submit</button>
+                    <button onClick={onSubmit}>Submit</button>
+                    <button onClick={onCancel}>Cancel</button>
                     <button onClick={onDelete}>Delete</button>
                 </>
             }

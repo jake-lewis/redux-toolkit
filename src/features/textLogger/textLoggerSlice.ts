@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter, PayloadAction, Selector, ParametricSelector, createSelector} from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 export interface Logger { 
     id: number,
@@ -7,7 +7,9 @@ export interface Logger {
 }
 
 const loggerAdapter = createEntityAdapter<Logger>();
-const initialState = loggerAdapter.getInitialState();
+const initialState = loggerAdapter.getInitialState({
+    loadingPorts: [] as number[]
+});
 
 export const textLoggerSlice = createSlice({
     name: 'textLogger',
@@ -23,13 +25,22 @@ export const textLoggerSlice = createSlice({
     }
 });
 
+export const selectTextLogger: Selector<RootState, ReturnType<typeof textLoggerSlice.reducer>> = (state) => state.textLogger;
+
+export const selectLoadingPorts: Selector<RootState, number[]> = (state) => selectTextLogger(state).loadingPorts;
+
 export const {
     selectById: selectLoggerById,
     selectIds: selectLoggerIds,
     selectEntities: selectLoggerEntities,
     selectAll: selectAllLoggers,
     selectTotal: selectTotalLoggers,
-} = loggerAdapter.getSelectors<RootState>((state) => state.textLogger);
+} = loggerAdapter.getSelectors<RootState>(selectTextLogger);
+
+export const selectPortIsLoading = 
+createSelector(
+    [selectLoggerById, selectLoadingPorts],
+    (logger, loadingports) => logger?.port ? loadingports.includes(logger.port) : false)
 
 export const { addLogger, editLogger, removeLogger } = textLoggerSlice.actions;
 export default textLoggerSlice.reducer;
