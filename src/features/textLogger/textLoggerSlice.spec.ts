@@ -23,7 +23,7 @@ describe('counter reducer', () => {
   });
 
   it('should handle adding a logger', () => {
-    const actual = textLoggerReducer(initialState, addLogger({id: 3, port: 1235, text: 'Test adding logger'}));
+    const actual = textLoggerReducer(initialState, addLogger({port: 1235, text: 'Test adding logger'}));
     expect(actual.ids).toHaveLength(3);
   });
 

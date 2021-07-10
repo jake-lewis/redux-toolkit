@@ -9,7 +9,7 @@ export function ConnectedTextLoggerList() {
 
     return (
         <div>
-            <button onClick={() => dispatch(addLogger({id: 1234, port: 3456, text: 'new logger'}))}>Add Logger</button>
+            <button onClick={() => dispatch(addLogger({port: 3456, text: 'new logger'}))}>Add Logger</button>
             {loggers.map(id => <ConnectedTextLogger loggerId={id}/>)}
         </div>);
 }
