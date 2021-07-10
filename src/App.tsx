@@ -1,10 +1,10 @@
-import { ConnectedTextLoggerList } from './features/textLogger/ConnectedTextLoggerList';
+import { ReduxTextLoggerList } from './features/textLogger/ReduxTextLoggerList';
 
 function App() {
   return (
     <div className="App">
       <div>
-        <ConnectedTextLoggerList />
+        <ReduxTextLoggerList />
       </div>
     </div>
   );

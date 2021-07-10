@@ -4,19 +4,18 @@ import { TextLogger } from "./TextLogger";
 import { removeLogger, selectLoggerById } from "./textLoggerSlice";
 
 
-type ConnectedTextLoggerProps = {
+type ReduxTextLoggerProps = {
     loggerId: EntityId;
 }
 
-export function ConnectedTextLogger({loggerId}: ConnectedTextLoggerProps) {
+export function ReduxTextLogger({loggerId}: ReduxTextLoggerProps) {
 
     const logger = useAppSelector(state => selectLoggerById(state, loggerId));
     const dispatch = useAppDispatch();
 
     return logger ?
         (<div>
-            <TextLogger logger={logger} />
-            <button onClick={() => dispatch(removeLogger(loggerId))}>Delete</button>
+            <TextLogger logger={logger} onDelete={() => dispatch(removeLogger(loggerId))} />
         </div>)
     : null;
 }
