@@ -1,5 +1,5 @@
 import { createSlice, createEntityAdapter, PayloadAction} from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import type { RootState } from '../../app/store';
 export interface Logger { 
     id: number,
     text: string, 

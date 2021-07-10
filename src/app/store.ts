@@ -1,11 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import textLoggerReducer from '../features/textLogger/textLoggerSlice';
+import { rootReducer } from './rootReducer';
 
 export const store = configureStore({
-  reducer: {
-    textLogger: textLoggerReducer
-  },
+  reducer: rootReducer,
 });
 
 export type AppDispatch = typeof store.dispatch;

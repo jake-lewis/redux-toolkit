@@ -1,7 +1,7 @@
 import { EntityId } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { TextLogger } from "./TextLogger";
-import { removeLogger, selectLoggerById } from "./textLoggerSlice";
+import { editLogger, removeLogger, selectLoggerById } from "./textLoggerSlice";
 
 
 type ReduxTextLoggerProps = {
@@ -15,7 +15,10 @@ export function ReduxTextLogger({loggerId}: ReduxTextLoggerProps) {
 
     return logger ?
         (<div>
-            <TextLogger logger={logger} onDelete={() => dispatch(removeLogger(loggerId))} />
+            <TextLogger 
+                logger={logger} 
+                onEdit={text => dispatch(editLogger({id: loggerId, changes: {text}}))} 
+                onDelete={() => dispatch(removeLogger(loggerId))} />
         </div>)
     : null;
 }
