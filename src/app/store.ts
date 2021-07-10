@@ -1,11 +1,9 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
-import counterReducer from '../features/counter/counterSlice';
 import textLoggerReducer from '../features/textLogger/textLoggerSlice';
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     textLogger: textLoggerReducer
   },
 });
