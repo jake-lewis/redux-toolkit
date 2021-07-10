@@ -1,38 +1,31 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-
+import { createSlice, createEntityAdapter} from '@reduxjs/toolkit';
+import { RootState } from '../../app/store';
 export interface Logger { 
+    id: number,
     text: string, 
     port: number
 }
 
-export interface LoggerState {
-    loggers: Logger[]
-}
-
-const initialState: LoggerState = { loggers: [] };
+const loggerAdapter = createEntityAdapter<Logger>();
+const initialState = loggerAdapter.getInitialState();
 
 export const textLoggerSlice = createSlice({
     name: 'textLogger',
     initialState,
     reducers: {
-        add: (state, action: PayloadAction<Logger>) => {
-            if (!state.loggers.find(logger => logger.port === action.payload.port))
-                state.loggers.push(action.payload);
-        },
-        edit: (state, action: PayloadAction<Logger>) => {
-            state.loggers.map(logger => {
-                if (logger.port === action.payload.port) {
-                    logger.text = action.payload.text;
-                }
-                return logger;
-            });
-        },
-        remove: (state, action: PayloadAction<number>) => {
-            state.loggers = state.loggers.filter(logger => logger.port !== action.payload);
-        }
+        addLogger: loggerAdapter.addOne,
+        editLogger: loggerAdapter.updateOne,
+        removeLogger: loggerAdapter.removeOne
     }
 });
 
-export const { add, edit, remove } = textLoggerSlice.actions;
+export const {
+    selectById: selectLoggerById,
+    selectIds: selectLoggerIds,
+    selectEntities: selectLoggerEntities,
+    selectAll: selectAllLoggers,
+    selectTotal: selectTotalLoggers,
+} = loggerAdapter.getSelectors<RootState>((state) => state.textLogger);
+
+export const { addLogger, editLogger, removeLogger } = textLoggerSlice.actions;
 export default textLoggerSlice.reducer;
