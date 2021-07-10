@@ -2,6 +2,10 @@
     color: red;
     display: flex;
 
+    &.loading {
+        background-color: aqua;
+    }
+
     input[readonly] {
         background: rgba(0, 0, 0, 0);
         border: none;

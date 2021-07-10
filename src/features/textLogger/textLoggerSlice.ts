@@ -1,4 +1,4 @@
-import { createSlice, createEntityAdapter, PayloadAction, Selector, ParametricSelector, createSelector} from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter, PayloadAction, Selector, createSelector} from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 export interface Logger { 
     id: number,
@@ -21,7 +21,16 @@ export const textLoggerSlice = createSlice({
             loggerAdapter.addOne(state, {id, ...payload})
         },
         editLogger: loggerAdapter.updateOne,
-        removeLogger: loggerAdapter.removeOne
+        removeLogger: loggerAdapter.removeOne,
+        setPortLoading: (state, {payload}: PayloadAction<{port: number, loading: boolean}>) => {
+            if (payload.loading) {
+                if (!state.loadingPorts.includes(payload.port))
+                    state.loadingPorts.push(payload.port)
+            }
+            else {
+                state.loadingPorts = state.loadingPorts.filter(port => port !== payload.port);
+            }
+        }
     }
 });
 
@@ -40,7 +49,7 @@ export const {
 export const selectPortIsLoading = 
 createSelector(
     [selectLoggerById, selectLoadingPorts],
-    (logger, loadingports) => logger?.port ? loadingports.includes(logger.port) : false)
+    (logger, loadingPorts) => logger?.port ? loadingPorts.includes(logger.port) : false)
 
-export const { addLogger, editLogger, removeLogger } = textLoggerSlice.actions;
+export const { addLogger, editLogger, removeLogger, setPortLoading } = textLoggerSlice.actions;
 export default textLoggerSlice.reducer;
