@@ -10,9 +10,5 @@ export function ReduxProductRow({productId}: Props) {
     
     const product = useAppSelector(state => selectActiveProductById(state, productId));
 
-    return (
-        <>
-            {product ?? <ProductRow product={product!}/>}
-        </>
-    )
+    return (product ? <ProductRow product={product!}/> : null)
 }

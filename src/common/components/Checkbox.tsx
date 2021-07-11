@@ -10,8 +10,9 @@ export function Checkbox({ name, initialState = false }: Props) {
 
     return (
         <input
+            className="checkbox"
             name={name}
-            type='checkbox'
+            type="checkbox"
             checked={isChecked}
             onChange={_ => setIsChecked(!isChecked)} />
     )

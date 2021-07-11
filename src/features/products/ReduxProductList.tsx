@@ -16,6 +16,7 @@ export function ReduxProductList() {
 
     const onAdd = (name: string, description: string) => {
         dispatch(addProduct({name, description}));
+        setShowModal(false);
     }
     
     return (
