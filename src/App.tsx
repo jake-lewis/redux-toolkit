@@ -1,4 +1,4 @@
-import { ReduxProductList } from './features/products/ReduxProductList';
+import { ReduxProductList } from './features/products/list/ReduxProductList';
 
 function App() {
   return (

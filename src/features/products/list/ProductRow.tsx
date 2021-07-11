@@ -1,5 +1,5 @@
-import { Checkbox } from "../../common/components/Checkbox";
-import { Product } from "./productSlice";
+import { Checkbox } from "../../../common/components/Checkbox";
+import { Product } from "../productSlice";
 import './ProductRow.scss';
 
 export interface Props {
@@ -15,12 +15,12 @@ export function ProductRow({product, onCheck}: Props) {
     return (
         <div className='product'>
             <Checkbox name='productSelected' isChecked={product.checked} onCheck={onCheck}/>
-            <p>
-                <span>{product.id}</span>
-                <span>{product.name}</span>
-                <span>{dateCreated}</span>
-                <span>{dateUpdated}</span>
-            </p>
+            <div>
+                <p>{product.id}</p>
+                <p>{product.name}</p>
+                <p>{dateCreated}</p>
+                <p>{dateUpdated}</p>
+            </div>
         </div>
     );
 }

@@ -1,7 +1,7 @@
-import { useAppSelector } from "../../app/hooks";
-import { useAppDispatch } from "../../app/store";
+import { useAppSelector } from "../../../app/hooks";
+import { useAppDispatch } from "../../../app/store";
 import { ProductRow } from "./ProductRow";
-import { selectActiveProductById, updateProduct } from "./productSlice";
+import { selectActiveProductById, updateProduct } from "../productSlice";
 
 export interface Props {
     productId: number

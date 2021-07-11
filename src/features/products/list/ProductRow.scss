@@ -1,0 +1,18 @@
+.product {
+    display: flex;
+    align-items: center;
+
+    > div {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        
+        > p {
+            flex-grow: 2;
+
+            &:first-child {
+                flex-grow: 1;
+            }
+        }
+    }
+}

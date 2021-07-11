@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSelector, createSlice, PayloadAction, Selector } from "@reduxjs/toolkit";
+import { createEntityAdapter, createSelector, createSlice, PayloadAction, Selector, Update } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 
 export interface Product {
@@ -21,7 +21,7 @@ export const productSlice = createSlice({
         addProduct: (state, { payload }: PayloadAction<{ name: string, description: string }>) => {
             if (!!(payload.name.trim()) && !!(payload.description.trim())) {//not null, undefined, or empty
                 const id = (state.ids as number[]).reduce((acc, id) => Math.max(acc, id), 0) + 1; //increment id
-                const now = new Date().valueOf();
+                const now = Date.now();
                 productAdapter.addOne(state, {
                     id: id,
                     name: payload.name,
@@ -33,7 +33,10 @@ export const productSlice = createSlice({
                 })
             }
         },
-        updateProduct: productAdapter.updateOne,
+        updateProduct: (state, {payload}: PayloadAction<Update<Product>>) => {
+            payload.changes.updatedOn = Date.now();
+            productAdapter.updateOne(state, payload);
+        },
         removeProduct: (state, { payload }: PayloadAction<{ id: number }>) => {
             if ((state.ids as number[]).includes(payload.id))
                 productAdapter.updateOne(state, { id: payload.id, changes: { tombstoned: true } });

@@ -1,11 +1,11 @@
-import { useAppSelector } from "../../app/hooks";
-import { addProduct, checkAll, selectAllActiveProductIds } from "./productSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { addProduct, checkAll, selectAllActiveProductIds } from "../productSlice";
 import { ReduxProductRow } from "./ReduxProductRow";
 import Modal from 'react-modal';
-import { ProductAddDialog } from "./add/ProductAddDialog";
+import { ProductAddDialog } from "../add/ProductAddDialog";
 import { useState } from "react";
-import './ReduxProductList';
-import { useAppDispatch } from "../../app/store";
+import './ReduxProductList.scss';
+import { useAppDispatch } from "../../../app/store";
 
 Modal.setAppElement('#root'); //todo check if this is the right place for it / need to worry about multiple modals?
 
