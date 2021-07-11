@@ -5,8 +5,8 @@ export interface Product {
     id: number,
     name: string,
     description: string,
-    createdOn: Date,
-    updatedOn: Date,
+    createdOn: number,
+    updatedOn: number,
     tombstoned: boolean
 }
 
@@ -20,7 +20,7 @@ export const productSlice = createSlice({
         addProduct: (state, {payload}: PayloadAction<{name: string, description: string}>) => {
             if (!!(payload.name.trim()) && !!(payload.description.trim())) {//not null, undefined, or empty
                 const id = (state.ids as number[]).reduce((acc, id) => Math.max(acc, id), 0) + 1; //increment id
-                const now = new Date();
+                const now = new Date().valueOf();;
                 productAdapter.addOne(state, {
                     id: id, 
                     name: payload.name, 
