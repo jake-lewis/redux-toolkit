@@ -25,12 +25,20 @@ export const productSlice = createSlice({
     }
 });
 
-export const selectProduct: Selector<RootState, ReturnType<typeof productSlice.reducer>> = state => state.products;
+export const selectProducts: Selector<RootState, ReturnType<typeof productSlice.reducer>> = state => state.products;
 
 export const {
-    selectById: selectProductById
-} = productAdapter.getSelectors<RootState>(selectProduct);
+    selectById: selectProductById,
+    selectIds: selectProductIds,
+    selectEntities: selectProductEntities,
+    selectAll: selectAllProducts,
+    selectTotal: selectTotalProducts
+} = productAdapter.getSelectors<RootState>(selectProducts);
 
+export const selectAllActiveProducts = 
+    createSelector(selectAllProducts, products => products.filter(product => !product.tombstoned));
+export const selectAllActiveProductIds =
+    createSelector(selectAllActiveProducts, products => products.map(product => product.id))
 export const selectActiveProductById = 
     createSelector(selectProductById, product => product?.tombstoned ? undefined : product);
 
