@@ -1,13 +1,34 @@
-import { useAppSelector } from "../../app/hooks";
-import { selectAllActiveProductIds } from "./productSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { addProduct, selectAllActiveProductIds } from "./productSlice";
 import { ReduxProductRow } from "./ReduxProductRow";
+import Modal from 'react-modal';
+import { ProductAddDialog } from "./add/ProductAddDialog";
+import { useState } from "react";
+import './ReduxProductList';
+
+Modal.setAppElement('#root'); //todo check if this is the right place for it / need to worry about multiple modals?
 
 export function ReduxProductList() {
     
     const products = useAppSelector(state => selectAllActiveProductIds(state));
+    const [showModal, setShowModal] = useState(false);
+    const dispatch = useAppDispatch();
+
+    const onAdd = (name: string, description: string) => {
+        dispatch(addProduct({name, description}));
+    }
     
     return (
-        <div>
+        <div className="productList">
+            <div>
+                <h1>Products</h1>
+                <button onClick={_ => setShowModal(true)}>Add Product</button>
+            </div>
+            <Modal
+                isOpen={showModal}
+                onRequestClose={_ => setShowModal(false)}>
+                <ProductAddDialog onAdd={onAdd}/>
+            </Modal>
             {products.map(id => <ReduxProductRow key={id} productId={id} />)}
         </div>
     )

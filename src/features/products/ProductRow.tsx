@@ -1,5 +1,6 @@
 import { Checkbox } from "../../common/components/Checkbox";
 import { Product } from "./productSlice";
+import './ProductRow.scss';
 
 export interface Props {
     product: Product
@@ -11,9 +12,9 @@ export function ProductRow({product}: Props) {
             <Checkbox name='productSelected'/>
             <p>
                 <span>{product.id}</span>
-                <span>{product.productName}</span>
-                <span>{product.createdOn}</span>
-                <span>{product.updatedOn}</span>
+                <span>{product.name}</span>
+                <span>{product.createdOn.toLocaleDateString()}</span>
+                <span>{product.updatedOn.toLocaleDateString()}</span>
             </p>
         </div>
     );

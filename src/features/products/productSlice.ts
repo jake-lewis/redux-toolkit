@@ -3,7 +3,8 @@ import { RootState } from "../../app/store";
 
 export interface Product {
     id: number,
-    productName: string,
+    name: string,
+    description: string,
     createdOn: Date,
     updatedOn: Date,
     tombstoned: boolean
@@ -16,7 +17,20 @@ export const productSlice = createSlice({
     name: 'products',
     initialState,
     reducers: {
-        addProduct: productAdapter.addOne,
+        addProduct: (state, {payload}: PayloadAction<{name: string, description: string}>) => {
+            if (!!(payload.name.trim()) && !!(payload.description.trim())) {//not null, undefined, or empty
+                const id = (state.ids as number[]).reduce((acc, id) => Math.max(acc, id), 0) + 1; //increment id
+                const now = new Date();
+                productAdapter.addOne(state, {
+                    id: id, 
+                    name: payload.name, 
+                    description: payload.description, 
+                    createdOn: now, 
+                    updatedOn: now, 
+                    tombstoned: false
+                })
+            }
+        },
         updateProduct: productAdapter.updateOne,
         removeProduct: (state, {payload}: PayloadAction<{id: number}>) => {
             if ((state.ids as number[]).includes(payload.id))
@@ -42,4 +56,5 @@ export const selectAllActiveProductIds =
 export const selectActiveProductById = 
     createSelector(selectProductById, product => product?.tombstoned ? undefined : product);
 
+export const { addProduct, updateProduct, removeProduct } = productSlice.actions;
 export default productSlice.reducer;

@@ -1,10 +1,10 @@
-import { ReduxTextLoggerList } from './features/textLogger/ReduxTextLoggerList';
+import { ReduxProductList } from './features/products/ReduxProductList';
 
 function App() {
   return (
     <div className="App">
       <div>
-        <ReduxTextLoggerList />
+        <ReduxProductList />
       </div>
     </div>
   );
