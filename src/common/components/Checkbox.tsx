@@ -2,11 +2,12 @@ import { useState } from "react";
 
 export interface Props {
     name: string
-    initialState?: boolean
+    initialState?: boolean,
+    stateOverride?: boolean
 }
 
-export function Checkbox({ name, initialState = false }: Props) {
-    const [isChecked, setIsChecked] = useState(initialState);
+export function Checkbox({ name, initialState = false, stateOverride }: Props) {
+    const [isChecked, setIsChecked] = useState(stateOverride || initialState);
 
     return (
         <input

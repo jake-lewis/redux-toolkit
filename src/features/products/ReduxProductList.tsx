@@ -12,6 +12,7 @@ export function ReduxProductList() {
     
     const products = useAppSelector(state => selectAllActiveProductIds(state));
     const [showModal, setShowModal] = useState(false);
+    const [checkboxStateOverride, setCheckboxStateOverride] = useState(false);
     const dispatch = useAppDispatch();
 
     const onAdd = (name: string, description: string) => {
@@ -24,13 +25,15 @@ export function ReduxProductList() {
             <div>
                 <h1>Products</h1>
                 <button onClick={_ => setShowModal(true)}>Add Product</button>
+                <button onClick={_ => setCheckboxStateOverride(true)}>+</button>
+                <button onClick={_ => setCheckboxStateOverride(false)}>-</button>
             </div>
             <Modal
                 isOpen={showModal}
                 onRequestClose={_ => setShowModal(false)}>
                 <ProductAddDialog onAdd={onAdd}/>
             </Modal>
-            {products.map(id => <ReduxProductRow key={id} productId={id} />)}
+            {products.map(id => <ReduxProductRow key={id} productId={id} checkboxStateOverride={checkboxStateOverride}/>)}
         </div>
     )
 }

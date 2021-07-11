@@ -3,12 +3,13 @@ import { ProductRow } from "./ProductRow";
 import { selectActiveProductById } from "./productSlice";
 
 export interface Props {
-    productId: number
+    productId: number,
+    checkboxStateOverride: boolean
 }
 
-export function ReduxProductRow({productId}: Props) {
+export function ReduxProductRow({productId, checkboxStateOverride}: Props) {
     
     const product = useAppSelector(state => selectActiveProductById(state, productId));
 
-    return (product ? <ProductRow product={product!}/> : null)
+    return (product ? <ProductRow product={product!} checkboxStateOverride={checkboxStateOverride}/> : null)
 }
