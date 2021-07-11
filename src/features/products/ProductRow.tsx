@@ -4,17 +4,17 @@ import './ProductRow.scss';
 
 export interface Props {
     product: Product,
-    checkboxStateOverride: boolean
+    onCheck: (checked: boolean) => void
 }
 
-export function ProductRow({product, checkboxStateOverride}: Props) {
+export function ProductRow({product, onCheck}: Props) {
 
     const dateCreated = new Date(product.createdOn).toLocaleDateString();
     const dateUpdated = new Date(product.updatedOn).toLocaleDateString();
 
     return (
         <div className='product'>
-            <Checkbox name='productSelected' stateOverride={checkboxStateOverride}/>
+            <Checkbox name='productSelected' isChecked={product.checked} onCheck={onCheck}/>
             <p>
                 <span>{product.id}</span>
                 <span>{product.name}</span>

@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch } from "../../app/store";
 import { ReduxTextLogger } from "./ReduxTextLogger";
 import { addLogger, selectLoggerIds } from "./textLoggerSlice"
 

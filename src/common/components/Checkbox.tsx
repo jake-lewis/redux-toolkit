@@ -1,14 +1,10 @@
-import { useEffect, useState } from "react";
-
 export interface Props {
-    name: string
-    initialState?: boolean,
-    stateOverride?: boolean
+    name: string,
+    isChecked: boolean,
+    onCheck: (checked: boolean) => void
 }
 
-export function Checkbox({ name, initialState = false, stateOverride }: Props) {
-    const [isChecked, setIsChecked] = useState(initialState);
-    useEffect(() => {stateOverride !== undefined && setIsChecked(stateOverride);}, [stateOverride]);
+export function Checkbox({ name, isChecked, onCheck}: Props) {
 
     return (
         <input
@@ -16,6 +12,6 @@ export function Checkbox({ name, initialState = false, stateOverride }: Props) {
             name={name}
             type="checkbox"
             checked={isChecked}
-            onChange={_ => setIsChecked(!isChecked)} />
+            onChange={(event) => onCheck(event.target.checked)} />
     )
 }

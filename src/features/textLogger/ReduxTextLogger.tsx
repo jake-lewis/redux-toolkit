@@ -1,5 +1,6 @@
 import { EntityId } from "@reduxjs/toolkit";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppSelector } from "../../app/hooks";
+import { useAppDispatch } from "../../app/store";
 import { TextLogger } from "./TextLogger";
 import { editLogger, removeLogger, selectLoggerById, selectPortIsLoading, setPortLoading } from "./textLoggerSlice";
 
