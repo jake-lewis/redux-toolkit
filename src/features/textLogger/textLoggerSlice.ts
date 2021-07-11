@@ -1,8 +1,8 @@
-import { createSlice, createEntityAdapter, PayloadAction, Selector, createSelector} from '@reduxjs/toolkit';
+import { createSlice, createEntityAdapter, PayloadAction, Selector, createSelector } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
-export interface Logger { 
+export interface Logger {
     id: number,
-    text: string, 
+    text: string,
     port: number
 }
 
@@ -12,17 +12,17 @@ const initialState = loggerAdapter.getInitialState({
 });
 
 export const textLoggerSlice = createSlice({
-    name: 'textLogger',
+    name: 'textLoggers',
     initialState,
     reducers: {
         // Prevent specifying ID on add, ID of new logger is always incremented from the previous highest ID
-        addLogger: (state, {payload}: PayloadAction<Omit<Logger, "id">>) => {
-            const id = (state.ids as number[]).reduce((acc, id) => Math.max(acc,id), 0) + 1;
-            loggerAdapter.addOne(state, {id, ...payload})
+        addLogger: (state, { payload }: PayloadAction<Omit<Logger, "id">>) => {
+            const id = (state.ids as number[]).reduce((acc, id) => Math.max(acc, id), 0) + 1;
+            loggerAdapter.addOne(state, { id, ...payload })
         },
         editLogger: loggerAdapter.updateOne,
         removeLogger: loggerAdapter.removeOne,
-        setPortLoading: (state, {payload}: PayloadAction<{port: number, loading: boolean}>) => {
+        setPortLoading: (state, { payload }: PayloadAction<{ port: number, loading: boolean }>) => {
             if (payload.loading) {
                 if (!state.loadingPorts.includes(payload.port))
                     state.loadingPorts.push(payload.port)
@@ -34,9 +34,7 @@ export const textLoggerSlice = createSlice({
     }
 });
 
-export const selectTextLogger: Selector<RootState, ReturnType<typeof textLoggerSlice.reducer>> = (state) => state.textLogger;
-
-export const selectLoadingPorts: Selector<RootState, number[]> = (state) => selectTextLogger(state).loadingPorts;
+export const selectTextLogger: Selector<RootState, ReturnType<typeof textLoggerSlice.reducer>> = (state) => state.textLoggers;
 
 export const {
     selectById: selectLoggerById,
@@ -46,9 +44,8 @@ export const {
     selectTotal: selectTotalLoggers,
 } = loggerAdapter.getSelectors<RootState>(selectTextLogger);
 
-export const selectPortIsLoading = 
-createSelector(
-    [selectLoggerById, selectLoadingPorts],
+export const selectLoadingPorts: Selector<RootState, number[]> = (state) => selectTextLogger(state).loadingPorts;
+export const selectPortIsLoading = createSelector([selectLoggerById, selectLoadingPorts], 
     (logger, loadingPorts) => logger?.port ? loadingPorts.includes(logger.port) : false)
 
 export const { addLogger, editLogger, removeLogger, setPortLoading } = textLoggerSlice.actions;
