@@ -8,7 +8,9 @@ import textLoggerReducer, {
 
 describe('counter reducer', () => {
   const loggerAdapter = createEntityAdapter<Logger>();
-  const initialState = loggerAdapter.getInitialState();
+  const initialState = loggerAdapter.getInitialState({
+    loadingPorts: [] as number[]
+  });
   initialState.entities = { 
     1: {id: 1, port: 1234, text: 'First'}, 
     2: {id: 2, port: 4567, text: 'Second'}
@@ -18,7 +20,8 @@ describe('counter reducer', () => {
   it('should handle initial state', () => {
     expect(textLoggerReducer(undefined, { type: 'unknown' })).toEqual({
       entities:{},
-      ids: []
+      ids: [],
+      loadingPorts: []
     });
   });
 
